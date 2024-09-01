@@ -1,0 +1,11 @@
+{
+  storage file_system {
+    root /etc/caddy/certificates
+  }
+}
+
+onlydjango.com {
+  tls /etc/caddy/certificates/caddy.pem /etc/caddy/certificates/caddy.key
+
+  reverse_proxy web:8000
+}

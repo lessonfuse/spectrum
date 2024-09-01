@@ -1,0 +1,83 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en" class="h-full bg-slate-200">
+<head>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    <!-- :) -->
+    const $ = document.getElementById.bind(document);
+    const $on = document.addEventListener.bind(document);
+  </script>
+
+  <title>
+      {{  SITE_TITLE }}
+  </title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="">
+  <meta name="keywords" content="">
+  <meta name="author" content="">
+  <meta property="og:title" content="{{ SITE_TITLE }}">
+  <meta property="og:image" content="{{ SITE_OG }}">
+  <meta property="og:url" content="{{ SITE_URL }}">
+  <meta property="og:site_name" content="{{ SITE_NAME }}">
+  <meta property="og:type" content="website">
+
+  <!--HTMX-->
+  <script src="https://unpkg.com/htmx.org@1.9.10"></script>
+  <!--HTMX PRELOAD-->
+  <script src="https://unpkg.com/htmx.org@1.9.12/dist/ext/preload.js"></script>
+  <!--FontAwesome -->
+  <link type="text/css"
+        rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+  <!--ALPINEJS -->
+  <script src="https://unpkg.com/alpinejs" defer></script>
+  <meta charset="utf-8" />
+  <!-- Tailwindcss build -->
+  <link type="text/css" href="{% static 'css/style.css' %}" rel="stylesheet">
+
+  {% block extrahead %}{% endblock extrahead %}
+
+  {% block dynamic_js %}
+  {% endblock %}
+
+  {% block css_debug %}
+    <style>
+        * {
+            outline: 2px solid red; /* Set the outline style and color */
+        }
+    </style>
+  {% endblock %}
+
+</head>
+
+<body class="h-full {% block overflow %} overflow-hidden{% endblock overflow %}">
+
+{% block header %}
+{% endblock header %}
+
+{% block base_content %}
+{% endblock base_content %}
+
+<div class="text-black-500 text-center font-bold gap-2 text-xs flex-col flex mx-auto place-items-center">
+  V.{{ site_version }}
+</div>
+</body>
+
+
+{% if debug %}
+  <script>
+    if (typeof window.htmx !== "undefined") {
+      htmx.on("htmx:afterSettle", function(detail) {
+        if (
+          typeof window.djdt !== "undefined"
+          && detail.target instanceof HTMLBodyElement
+        ) {
+          djdt.show_toolbar();
+        }
+      });
+    }
+  </script>
+{% endif %}
+</html>
+
+

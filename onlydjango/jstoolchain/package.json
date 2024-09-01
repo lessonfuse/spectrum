@@ -1,0 +1,13 @@
+{
+  "devDependencies": {
+    "prettier": "^3.2.5",
+    "tailwindcss": "^3.4.1"
+  },
+  "scripts": {
+    "tww": "tailwindcss -i ../jstoolchain/input.css -o ../mysite/static/css/style.css --watch",
+    "twb": "tailwindcss -i ../jstoolchain/input.css -o ../mysite/static/css/style.css"
+  },
+  "dependencies": {
+    "@tailwindcss/forms": "^0.5.7"
+  }
+}

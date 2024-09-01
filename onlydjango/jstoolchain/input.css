@@ -1,0 +1,63 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+.rich-text > h2 {
+    @apply text-3xl font-bold uppercase my-2;
+}
+
+.rich-text > h3 {
+    @apply text-2xl font-bold uppercase my-2;
+}
+
+.rich-text > a, .rich-text > p > a {
+    @apply bg-gradient-to-r border font-semibold px-1 from-transparent to-transparent via-accent/50;
+}
+
+.rich-text > p {
+    @apply text-2xl my-2 leading-loose;
+}
+
+.rich-text > ul {
+    @apply list-disc list-inside;
+}
+
+.rich-text > ol {
+    @apply list-decimal list-inside;
+}
+
+.rich-text > blockquote {
+    @apply border-l-4 border-accent p-2 my-5;
+}
+
+.richtext-image {
+    @apply mx-auto rounded-xl shadow-lg my-5;
+}
+
+.ticker-item {
+    @apply inline-flex transition-colors focus-visible:outline-none h-14 w-14 rounded-full bg-primary text-secondary hover:bg-accent hover:text-white cursor-pointer;
+}
+
+.ticker-item-alt {
+    @apply inline-flex transition-colors focus-visible:outline-none rounded-full p-5 bg-primary/10 text-primary/50 shadow-secondary/10 shadow hover:bg-blue-500 hover:text-white cursor-pointer ;
+}
+
+.top-bar-button {
+    @apply text-sm place-items-center place-content-center uppercase text-white bg-gradient-to-bl from-pinkish-blue to-teal rounded-xl px-5 py-3 font-semibold shadow-modern  flex gap-2  h-12;
+}
+
+.top-bar-button-shell {
+    @apply text-sm flex self-center text-center uppercase text-white bg-gradient-to-bl  to-teal from-pinkish-blue font-semibold shadow-modern h-12 w-12;
+}
+
+.teal-gr {
+    @apply bg-gradient-to-bl from-pinkish-blue to-teal text-white;
+}
+
+.add-listing-button {
+    @apply bg-gradient-to-bl rounded-xl from-pinkish-blue to-teal text-white uppercase h-10 place-items-center place-content-center px-3 cursor-pointer flex gap-2 shadow-modern;
+}
+
+.span-badges {
+    @apply text-black/50 bg-black/10 rounded px-1;
+}

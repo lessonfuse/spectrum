@@ -1,0 +1,26 @@
+[project]
+name = "onlydjango"
+version = "0.1.0"
+description = "Add your description here"
+readme = "README.md"
+requires-python = ">=3.12"
+dependencies = [
+    "django>=5.1",
+    "python-dotenv>=1.0.1",
+    "django-allauth>=64.1.0",
+    "django-debug-toolbar>=4.4.6",
+    "huey>=2.5.1",
+    "redis>=5.0.8",
+    "django-browser-reload>=1.15.0",
+    "pytz>=2024.1",
+    "gunicorn>=23.0.0",
+    "django-crispy-forms>=2.3",
+    "crispy-tailwind>=1.0.3",
+    "pillow>=10.4.0",
+    "django-custom-error-views>=0.2.5",
+    "aider-chat>=0.54.4",
+    "psycopg[binary,pool]>=3.2.1",
+    "django-storages[s3]>=1.14.4",
+    "django-cotton>=0.9.32",
+    "ruff>=0.6.2",
+]
