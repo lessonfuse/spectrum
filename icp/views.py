@@ -12,7 +12,6 @@ from .models import (
     SupplementaryService, GeneralInformation, LearningProfile,
     DevelopmentalArea, SkillsStrengths, AccessibleLearningSupport
 )
-from .forms import LearningProfileForm
 
 
 def home(request):
@@ -100,7 +99,7 @@ class GeneralInformationView(ODCreateView):
 
 class LearningProfileView(ODCreateView):
     model = LearningProfile
-    form_class = LearningProfileForm
+    # form_class = LearningProfileForm
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
@@ -239,7 +238,7 @@ def generate_icp(request, student_id):
     document.add_heading('General Information', level=1)
     document.add_paragraph(f'ID Card Number: {student.id_card_number}')
     document.add_paragraph(f'IE Program: {student.ie_program}')
-    
+
     try:
         general_info = student.general_information
         document.add_paragraph(f'Parent Concerns: {general_info.parent_concerns}')
