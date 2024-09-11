@@ -1,0 +1,75 @@
+{% extends 'base.html' %}
+
+{% block css_debug %}
+
+{% endblock %}
+
+
+{% block base_content %}
+    <section class="py-10"> <!-- Grid layout with 4 cards -->
+        <div class="grid grid-cols-2 md:grid-cols-4 gap-4 "> <!-- Assets Card -->
+            <div
+                    class="assets-card">
+                <div class="flex gap-2 justify-between">
+                    <h3 class="text-lg font-medium">Assets</h3>
+                    <!-- Add new asset button -->
+
+                    <i onclick="location.href = '/a/create';"
+                       class="fa fa-plus plus-icon cursor-pointer"></i>
+                </div>
+
+
+                <p class="text-4xl font-bold">
+                    {{ asset_value|floatformat:"2g" }}
+                </p>
+            </div> <!-- Liabilities Card -->
+            <div class="assets-card">
+                <div class="flex gap-2 justify-between">
+                    <h3 class="text-lg font-medium">Liabilities</h3>
+                    <!-- Add new asset button -->
+
+                    <i onclick="location.href = '/l/create';"
+                       class="fa fa-plus plus-icon cursor-pointer"></i>
+                </div>
+                <p class="text-4xl font-bold">{{ liability_value|floatformat:"2g" }}</p></div> <!-- Expenses Card -->
+            <div class="assets-card">
+                <div class="flex gap-2 justify-between">
+                    <h3 class="text-lg font-medium">Expenses</h3>
+                    <!-- Add new asset button -->
+
+                    <i onclick="location.href = '/e/create';"
+                       class="fa fa-plus plus-icon cursor-pointer"></i>
+                </div>
+                <p class="text-4xl font-bold">{{ expense_value|floatformat:"2g" }}</p></div> <!-- Income Card -->
+            <div class="assets-card">
+                <div class="flex gap-2 justify-between">
+                    <h3 class="text-lg font-medium">Income</h3>
+                    <!-- Add new asset button -->
+
+                    <i onclick="location.href = '/i/create';"
+                       class="fa fa-plus plus-icon cursor-pointer"></i>
+                </div>
+                <p class="text-4xl font-bold">{{ income_value|floatformat:"2g" }}</p></div>
+
+            <div class="assets-card">
+                <div class="flex gap-2 justify-between">
+                    <h3 class="text-lg font-medium">Net worth</h3>
+                    <!-- Add new asset button -->
+
+                    <i onclick="location.href = '/i/create';"
+                       class="fa fa-plus plus-icon cursor-pointer"></i>
+                </div>
+                <p class="text-4xl font-bold">{{ tally |floatformat:"2g"  }}</p></div>
+
+            <div class="assets-card">
+                <div class="flex gap-2 justify-between">
+                    <h3 class="text-lg font-medium">Cash flow</h3>
+                    <!-- Add new asset button -->
+
+                    <i onclick="location.href = '/i/create';"
+                       class="fa fa-plus plus-icon cursor-pointer"></i>
+                </div>
+                <p class="text-4xl font-bold">{{ cash_flow }}</p></div>
+        </div>
+    </section>
+{% endblock %}

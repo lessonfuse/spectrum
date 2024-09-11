@@ -28,7 +28,10 @@ THIRD_PARTY_APPS = [
     "django_browser_reload",
     "huey.contrib.djhuey",
     'django_cotton',
-     "debug_toolbar",
+    "debug_toolbar",
+    "crispy_forms",
+    "crispy_tailwind",
+    "django_flatpickr",
 ]
 
 DJANGO_APPS = [
@@ -58,7 +61,7 @@ MIDDLEWARE = [
     "django.middleware.common.CommonMiddleware",
     "django.middleware.csrf.CsrfViewMiddleware",
     "django.contrib.auth.middleware.AuthenticationMiddleware",
-    "django.contrib.auth.middleware.LoginRequiredMiddleware",
+    # "django.contrib.auth.middleware.LoginRequiredMiddleware",
     "django.contrib.messages.middleware.MessageMiddleware",
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
     "django.contrib.messages.middleware.MessageMiddleware",

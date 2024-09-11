@@ -1,0 +1,16 @@
+{% extends 'app_base.html' %}
+{% load crispy_forms_filters %}
+{% load crispy_forms_tags %}
+
+{% block css_debug %}
+{% endblock %}
+
+{% block content %}
+    <div class="container mx-auto px-4 py-4 rounded-xl">
+        <h2 class="text-2xl font-semibold text-gray-900">
+            {{ title }}
+        </h2>
+       {% crispy form helper %}
+    </div>
+{% endblock %}
+

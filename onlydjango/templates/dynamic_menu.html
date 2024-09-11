@@ -1,0 +1,26 @@
+<div class="border border-gray-700"></div>
+{% for business in  request.user.jazemailuser.business_set.all %}
+    <a href=""
+       class="group flex justify-between text-gray-300 hover:bg-gray-700 hover:text-white px-2 py-2 text-base font-medium rounded-md">
+        <div>
+            <i class="text-gray-300 mr-3 flex-shrink-0 fas fa-building"></i>
+            {{ business.name|truncatechars:10 }}
+        </div>
+        <div
+                class="text-xs ml-1 text-gray-500 bg-gray-900 rounded-xl px-2 py-1">Business
+        </div>
+    </a>
+    {% for campaign in business.campaign_set.all %}
+        <a href=""
+           class="group ml-2 flex justify-between text-gray-300 hover:bg-gray-700 hover:text-white px-2 py-2 text-base font-medium rounded-md">
+            <div>
+                <i class="text-gray-300 mr-3 flex-shrink-0 fas fa-bullhorn"></i>
+                {{ campaign.name|truncatechars:10 }}
+            </div>
+
+            <div class="text-xs self-end ml-1 text-gray-500 bg-gray-900 rounded-xl px-2 py-1">
+                Campaign
+            </div>
+        </a>
+    {% endfor %}
+{% endfor %}

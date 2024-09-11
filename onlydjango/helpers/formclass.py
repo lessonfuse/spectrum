@@ -39,7 +39,7 @@ class ODCreateView(CreateView):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context["helper"] = CareOneFormHelper()
-        
+
         return context
 """
 
@@ -64,7 +64,7 @@ SUBMIT_BUTTON_STYLE = (
 class ODFormHelper(FormHelper):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
-        self.form_tag = kwargs.get("form_tag", False)
+        self.form_tag = kwargs.get("form_tag", True)
         self.form_method = kwargs.get("form_method", "POST")
         self.form_id = kwargs.get("form_id", "care_one_form")
         self.form_class = kwargs.get("form_class", "py-6 ")

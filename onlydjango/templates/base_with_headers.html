@@ -2,7 +2,9 @@
 <!DOCTYPE html>
 <html class="h-full bg-white">
 <head>
+    {#    <script src="https://cdn.tailwindcss.com"></script>#}
     <script>
+        <!-- :) -->
         const $ = document.getElementById.bind(document);
         const $on = document.addEventListener.bind(document);
     </script>
@@ -31,6 +33,7 @@
     <script src="https://unpkg.com/alpinejs" defer></script>
     <meta charset="utf-8"/>
     <!-- Tailwindcss build -->
+    {#    <link type="text/css" href="{% static 'css/style.css' %}" rel="stylesheet">#}
     <script src="https://cdn.tailwindcss.com"></script>
 
     {% block extrahead %}{% endblock extrahead %}
@@ -54,9 +57,11 @@
         event.detail.headers['X-CSRFToken'] = '{{ csrf_token }}';
     });
 </script>
+{% include 'userprofile/landing/parts/header.html' %}
 {% block base_content %}
 {% endblock %}
 </body>
+
 
 {% if debug %}
     <script>
