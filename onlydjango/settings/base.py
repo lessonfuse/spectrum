@@ -8,6 +8,7 @@ BASE_DIR = PROJECT_DIR.parent
 WSGI_APPLICATION = "onlydjango.wsgi.application"
 
 FIRST_PARTY_APPS = [
+    "icp"
 ]
 
 ALL_AUTH_APPS = [

@@ -1,16 +1,8 @@
-from django.contrib.auth.models import User
 import re
 
 from django.contrib.auth.models import User
-from django.contrib.auth.models import User
 from django.core.exceptions import ValidationError
 from django.db import models
-
-
-# Mainstream Program
-# School readiness
-# Early intervention
-# Homeschooling
 
 def validate_id_card_number(value):
     if not re.match(r'^A\d{1,6}$', value):
