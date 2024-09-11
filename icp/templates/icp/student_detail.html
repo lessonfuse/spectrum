@@ -1,5 +1,250 @@
 {% extends 'base.html' %}
 
 {% block base_content %}
-    hi
+<div class="container mx-auto px-4 py-8">
+    <h1 class="text-3xl font-bold mb-6">Student Details: {{ object.name }}</h1>
+
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+        <div class="bg-white shadow-md rounded-lg p-6">
+            <h2 class="text-2xl font-semibold mb-4">Basic Information</h2>
+            <p><strong>Name:</strong> {{ object.name }}</p>
+            <p><strong>ID Card Number:</strong> {{ object.id_card_number }}</p>
+            <p><strong>IE Program:</strong> {{ object.get_ie_program_display }}</p>
+            <p><strong>Date of Document:</strong> {{ object.date_of_document }}</p>
+            <p><strong>Current Education Level:</strong> {{ object.current_education_level }}</p>
+            <p><strong>Academic Strengths:</strong> {{ object.academic_strengths }}</p>
+            <p><strong>Areas of Interest:</strong> {{ object.areas_of_interest }}</p>
+        </div>
+
+        {% if object.general_information %}
+        <div class="bg-white shadow-md rounded-lg p-6">
+            <h2 class="text-2xl font-semibold mb-4">General Information</h2>
+            <p><strong>Parent Concerns:</strong> {{ object.general_information.parent_concerns }}</p>
+            <p><strong>Medical Alerts:</strong> {{ object.general_information.medical_alerts }}</p>
+        </div>
+        {% endif %}
+
+        {% if object.evaluation_summary %}
+        <div class="bg-white shadow-md rounded-lg p-6">
+            <h2 class="text-2xl font-semibold mb-4">Evaluation Summary</h2>
+            <p><strong>Diagnosed Conditions:</strong> {{ object.evaluation_summary.diagnosed_conditions }}</p>
+            <p><strong>Observation Results:</strong> {{ object.evaluation_summary.observation_results }}</p>
+        </div>
+        {% endif %}
+
+        {% if object.learning_profile %}
+        <div class="bg-white shadow-md rounded-lg p-6">
+            <h2 class="text-2xl font-semibold mb-4">Learning Profile</h2>
+            <p><strong>Learning Disabilities:</strong> {{ object.learning_profile.get_learning_disabilities_display }}</p>
+            <p><strong>Gifts and Talents:</strong> {{ object.learning_profile.get_gifts_and_talents_display }}</p>
+            <p><strong>Multiple Disabilities:</strong> {{ object.learning_profile.get_multiple_disabilities_display }}</p>
+            <p><strong>Physical Impairments:</strong> {{ object.learning_profile.get_physical_impairments_display }}</p>
+            <p><strong>Hearing Impairments:</strong> {{ object.learning_profile.get_hearing_impairments_display }}</p>
+            <p><strong>Visual Impairments:</strong> {{ object.learning_profile.get_visual_impairments_display }}</p>
+            <p><strong>Intellectual Impairment:</strong> {{ object.learning_profile.get_intellectual_impairment_display }}</p>
+            <p><strong>Autism Spectrum Disorder:</strong> {{ object.learning_profile.get_autism_spectrum_disorder_display }}</p>
+            <p><strong>Down Syndrome:</strong> {{ object.learning_profile.get_down_syndrome_display }}</p>
+            <p><strong>Global Development Delay:</strong> {{ object.learning_profile.get_global_development_delay_display }}</p>
+            <p><strong>Others:</strong> {{ object.learning_profile.others }}</p>
+        </div>
+        {% endif %}
+
+        {% if object.developmental_area %}
+        <div class="bg-white shadow-md rounded-lg p-6">
+            <h2 class="text-2xl font-semibold mb-4">Developmental Areas</h2>
+            <p><strong>Cognitive:</strong> {% if object.developmental_area.cognitive %}Yes{% else %}No{% endif %}</p>
+            <p><strong>Social Emotional:</strong> {% if object.developmental_area.social_emotional %}Yes{% else %}No{% endif %}</p>
+            <p><strong>Physical:</strong> {% if object.developmental_area.physical %}Yes{% else %}No{% endif %}</p>
+            <p><strong>Language:</strong> {% if object.developmental_area.language %}Yes{% else %}No{% endif %}</p>
+            <p><strong>Speaking:</strong> {{ object.developmental_area.speaking }}</p>
+            <p><strong>Reading:</strong> {{ object.developmental_area.reading }}</p>
+            <p><strong>Writing:</strong> {{ object.developmental_area.writing }}</p>
+            <p><strong>Listening:</strong> {{ object.developmental_area.listening }}</p>
+            <p><strong>Comprehension:</strong> {{ object.developmental_area.comprehension }}</p>
+            <p><strong>Others:</strong> {{ object.developmental_area.others }}</p>
+        </div>
+        {% endif %}
+
+        {% if object.skills_strengths %}
+        <div class="bg-white shadow-md rounded-lg p-6">
+            <h2 class="text-2xl font-semibold mb-4">Skills and Strengths</h2>
+            <p><strong>English:</strong> {{ object.skills_strengths.english }}</p>
+            <p><strong>Dhivehi:</strong> {{ object.skills_strengths.dhivehi }}</p>
+            <p><strong>Math:</strong> {{ object.skills_strengths.math }}</p>
+            <p><strong>Quran/Arabic:</strong> {{ object.skills_strengths.quran_arabic }}</p>
+            <p><strong>Islam:</strong> {{ object.skills_strengths.islam }}</p>
+            <p><strong>Key Competencies:</strong> {{ object.skills_strengths.key_competencies }}</p>
+            <p><strong>Social Skills:</strong> {{ object.skills_strengths.social_skills }}</p>
+            <p><strong>Adaptive Behavior:</strong> {{ object.skills_strengths.adaptive_behavior }}</p>
+            <p><strong>Language Communication:</strong> {{ object.skills_strengths.language_communication }}</p>
+            <p><strong>Others:</strong> {{ object.skills_strengths.others }}</p>
+        </div>
+        {% endif %}
+
+        {% if object.accessible_learning_support %}
+        <div class="bg-white shadow-md rounded-lg p-6">
+            <h2 class="text-2xl font-semibold mb-4">Accessible Learning Support</h2>
+            <p><strong>Learning Environment:</strong> {{ object.accessible_learning_support.learning_environment }}</p>
+            <p><strong>Learning Materials:</strong> {{ object.accessible_learning_support.learning_materials }}</p>
+            <p><strong>Adult Support:</strong> {{ object.accessible_learning_support.adult_support }}</p>
+            <p><strong>Content:</strong> {{ object.accessible_learning_support.content }}</p>
+            <p><strong>Methodology:</strong> {{ object.accessible_learning_support.methodology }}</p>
+            <p><strong>Assessment Modification:</strong> {{ object.accessible_learning_support.assessment_modification }}</p>
+        </div>
+        {% endif %}
+
+        {% if object.goals.all %}
+        <div class="bg-white shadow-md rounded-lg p-6">
+            <h2 class="text-2xl font-semibold mb-4">Goals</h2>
+            {% for goal in object.goals.all %}
+            <div class="mb-4">
+                <p><strong>Area:</strong> {{ goal.area }}</p>
+                <p><strong>Annual Goal:</strong> {{ goal.annual_goal }}</p>
+                <p><strong>Assessment Criteria:</strong> {{ goal.assessment_criteria }}</p>
+                <p><strong>Procedures:</strong> {{ goal.procedures }}</p>
+                <p><strong>Assessment Schedule:</strong> {{ goal.assessment_schedule }}</p>
+                <p><strong>Responsible Person:</strong> {{ goal.responsible_person }}</p>
+            </div>
+            {% endfor %}
+        </div>
+        {% endif %}
+
+        {% if object.intervention_services.all %}
+        <div class="bg-white shadow-md rounded-lg p-6">
+            <h2 class="text-2xl font-semibold mb-4">Intervention Services</h2>
+            {% for service in object.intervention_services.all %}
+            <div class="mb-4">
+                <p><strong>Program:</strong> {{ service.program }}</p>
+                <p><strong>Frequency:</strong> {{ service.frequency }}</p>
+                <p><strong>Duration:</strong> {{ service.duration }}</p>
+                <p><strong>Location:</strong> {{ service.location }}</p>
+                <p><strong>Initiation Date:</strong> {{ service.initiation_date }}</p>
+            </div>
+            {% endfor %}
+        </div>
+        {% endif %}
+
+        {% if object.supplementary_services.all %}
+        <div class="bg-white shadow-md rounded-lg p-6">
+            <h2 class="text-2xl font-semibold mb-4">Supplementary Services</h2>
+            {% for service in object.supplementary_services.all %}
+            <div class="mb-4">
+                <p><strong>Type of Support:</strong> {{ service.type_of_support }}</p>
+                <p><strong>Time:</strong> {{ service.time }}</p>
+                <p><strong>Duration:</strong> {{ service.duration }}</p>
+            </div>
+            {% endfor %}
+        </div>
+        {% endif %}
+
+        {% if object.icp_participants.all %}
+        <div class="bg-white shadow-md rounded-lg p-6">
+            <h2 class="text-2xl font-semibold mb-4">ICP Participants</h2>
+            {% for participant in object.icp_participants.all %}
+            <div class="mb-4">
+                <p><strong>Name:</strong> {{ participant.name }}</p>
+                <p><strong>Designation:</strong> {{ participant.designation }}</p>
+                <p><strong>Date:</strong> {{ participant.date }}</p>
+            </div>
+            {% endfor %}
+        </div>
+        {% endif %}
+
+        {% if object.important_dates %}
+        <div class="bg-white shadow-md rounded-lg p-6">
+            <h2 class="text-2xl font-semibold mb-4">Important Dates</h2>
+            <p><strong>Initial Referral:</strong> {{ object.important_dates.initial_referral }}</p>
+            <p><strong>ICP Meeting:</strong> {{ object.important_dates.icp_meeting }}</p>
+            <p><strong>Implementation:</strong> {{ object.important_dates.implementation }}</p>
+            <p><strong>Review:</strong> {{ object.important_dates.review }}</p>
+        </div>
+        {% endif %}
+
+        {% if object.transition_plan %}
+        <div class="bg-white shadow-md rounded-lg p-6">
+            <h2 class="text-2xl font-semibold mb-4">Transition Plan</h2>
+            <p><strong>Current Stage:</strong> {{ object.transition_plan.current_stage }}</p>
+            <p><strong>Next Stage:</strong> {{ object.transition_plan.next_stage }}</p>
+            <p><strong>Transition Goals:</strong> {{ object.transition_plan.transition_goals }}</p>
+            <p><strong>Support Needed:</strong> {{ object.transition_plan.support_needed }}</p>
+            <p><strong>Responsible Persons:</strong> {{ object.transition_plan.responsible_persons }}</p>
+        </div>
+        {% endif %}
+
+        {% if object.reviews.all %}
+        <div class="bg-white shadow-md rounded-lg p-6">
+            <h2 class="text-2xl font-semibold mb-4">Reviews</h2>
+            {% for review in object.reviews.all %}
+            <div class="mb-4">
+                <p><strong>Review Date:</strong> {{ review.review_date }}</p>
+                <p><strong>Progress Summary:</strong> {{ review.progress_summary }}</p>
+                <p><strong>Goals Achieved:</strong> {{ review.goals_achieved }}</p>
+                <p><strong>Goals in Progress:</strong> {{ review.goals_in_progress }}</p>
+                <p><strong>New Goals:</strong> {{ review.new_goals }}</p>
+                <p><strong>Next Review Date:</strong> {{ review.next_review_date }}</p>
+            </div>
+            {% endfor %}
+        </div>
+        {% endif %}
+
+        {% if object.documents.all %}
+        <div class="bg-white shadow-md rounded-lg p-6">
+            <h2 class="text-2xl font-semibold mb-4">Documents</h2>
+            {% for document in object.documents.all %}
+            <div class="mb-4">
+                <p><strong>Title:</strong> {{ document.title }}</p>
+                <p><strong>Upload Date:</strong> {{ document.upload_date }}</p>
+                <p><strong>Description:</strong> {{ document.description }}</p>
+                <p><a href="{{ document.file.url }}" class="text-blue-500 hover:underline">Download Document</a></p>
+            </div>
+            {% endfor %}
+        </div>
+        {% endif %}
+
+        {% if object.icp_team %}
+        <div class="bg-white shadow-md rounded-lg p-6">
+            <h2 class="text-2xl font-semibold mb-4">ICP Team</h2>
+            <p><strong>Formation Date:</strong> {{ object.icp_team.formation_date }}</p>
+            <h3 class="text-xl font-semibold mt-2 mb-2">Team Members:</h3>
+            <ul>
+            {% for member in object.icp_team.team_members.all %}
+                <li>{{ member.get_full_name }}</li>
+            {% endfor %}
+            </ul>
+        </div>
+        {% endif %}
+
+        {% if object.referrals.all %}
+        <div class="bg-white shadow-md rounded-lg p-6">
+            <h2 class="text-2xl font-semibold mb-4">Referrals</h2>
+            {% for referral in object.referrals.all %}
+            <div class="mb-4">
+                <p><strong>Referring Teacher:</strong> {{ referral.referring_teacher.get_full_name }}</p>
+                <p><strong>Referral Date:</strong> {{ referral.referral_date }}</p>
+                <p><strong>Reason for Referral:</strong> {{ referral.reason_for_referral }}</p>
+                <p><strong>Status:</strong> {{ referral.get_status_display }}</p>
+                {% if referral.approval_date %}
+                <p><strong>Approval Date:</strong> {{ referral.approval_date }}</p>
+                {% endif %}
+                {% if referral.approver %}
+                <p><strong>Approver:</strong> {{ referral.approver.get_full_name }}</p>
+                {% endif %}
+            </div>
+            {% endfor %}
+        </div>
+        {% endif %}
+    </div>
+
+    <div class="mt-8">
+        <a href="{% url 'student_update' object.id %}" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
+            Edit Student
+        </a>
+        <a href="{% url 'student_delete' object.id %}" class="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded ml-4">
+            Delete Student
+        </a>
+        <a href="{% url 'list_icps' %}" class="bg-gray-500 hover:bg-gray-700 text-white font-bold py-2 px-4 rounded ml-4">
+            Back to List
+        </a>
+    </div>
+</div>
 {% endblock %}
