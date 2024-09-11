@@ -30,6 +30,7 @@ class StudentDetailView(ODDetailView):
 class StudentCreateView(ODCreateView):
     model = Student
     fields = ['name', 'id_card_number', 'ie_program', 'date_of_document']
+    template_name = 'generic/create.html'
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
@@ -46,6 +47,10 @@ class StudentCreateView(ODCreateView):
                 ),
             },
         )
+
+    def form_valid(self, form):
+        self.object = form.save()
+        return super().form_valid(form)
 
     def get_success_url(self):
         return reverse_lazy('general_information', kwargs={'student_id': self.object.id})

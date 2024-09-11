@@ -38,7 +38,8 @@ class TestStudentCreateView(TestCase):
         response = self.client.post(self.url, data)
         self.assertEqual(response.status_code, 200)  # Stay on the same page
         self.assertFalse(Student.objects.filter(id_card_number='1234567890').exists())
-        self.assertFormError(response, 'form', 'name', 'This field is required.')
+        self.assertIn('name', response.context['form'].errors)
+        self.assertEqual(response.context['form'].errors['name'][0], 'This field is required.')
 
     def test_redirect_after_creation(self):
         data = {
@@ -48,6 +49,7 @@ class TestStudentCreateView(TestCase):
             'date_of_document': timezone.now().date().isoformat()
         }
         response = self.client.post(self.url, data)
+        self.assertEqual(response.status_code, 302)  # Check for redirect
         new_student = Student.objects.get(name='Jane Doe')
         expected_url = reverse('general_information', kwargs={'student_id': new_student.id})
         self.assertRedirects(response, expected_url)
