@@ -56,11 +56,8 @@ class StudentCreateView(ODCreateView):
         return reverse_lazy('general_information', kwargs={'student_id': self.object.id})
 
     def post(self, request, *args, **kwargs):
-        form = self.get_form()
-        if form.is_valid():
-            return self.form_valid(form)
-        else:
-            return self.form_invalid(form)
+        self.object = None
+        return super().post(request, *args, **kwargs)
 
 class StudentUpdateView(ODUpdateView):
     model = Student
