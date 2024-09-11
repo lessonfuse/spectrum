@@ -63,9 +63,9 @@ class TestStudentCRUDViews(TestCase):
         self.assertFalse(Student.objects.filter(pk=self.student.pk).exists())
         self.assertRedirects(response, reverse('list_icps'))
 
-        # Check if the template is using the correct URL
-        with self.assertRaises(NoReverseMatch):
-            reverse('asset_detail')
+        # Check if the student detail page no longer exists
+        response = self.client.get(reverse('student_detail', kwargs={'pk': self.student.pk}))
+        self.assertEqual(response.status_code, 404)
 
     def test_unauthenticated_access(self):
         self.client.logout()
