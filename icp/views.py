@@ -22,6 +22,7 @@ def home(request):
 class ICPListView(ODListView):
     model = Student
     context_object_name = 'students'
+    template_name = 'icp/list.html'
 
 class StudentCreateView(ODCreateView):
     model = Student
