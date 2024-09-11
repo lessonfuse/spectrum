@@ -156,4 +156,4 @@ SOCIALACCOUNT_PROVIDERS = {
 }
 
 SITE_VERSION = "0.0.1"
-SITE_NAME = os.getenv("SITE_NAME")
+SITE_NAME = os.getenv("SITE_NAME", "Onlydjango")

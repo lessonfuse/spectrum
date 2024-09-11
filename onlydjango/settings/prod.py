@@ -1,6 +1,6 @@
 import os
 
-from .base import *
+from .base import * # noqa
 from huey import RedisHuey
 
 DEBUG = False
@@ -41,9 +41,9 @@ STORAGES = {
     },
 }
 STATIC_URL = "static/"
-STATIC_ROOT = os.path.join(BASE_DIR, "staticfiles")
+STATIC_ROOT = os.path.join(BASE_DIR, "staticfiles") # noqa
 STATICFILES_DIRS = [
-    os.path.join(PROJECT_DIR, "static"),
+    os.path.join(PROJECT_DIR, "static"), # noqa
 ]
 
 # for django all auth
@@ -81,7 +81,7 @@ CACHES = {
         "LOCATION": [
             REDIS_URL,  # primary
         ],
-        "KEY_PREFIX": SITE_NAME,
+        "KEY_PREFIX": os.getenv("SITE_NAME", "Onlydjango")
     }
 }
 

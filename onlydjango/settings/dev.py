@@ -1,8 +1,7 @@
-import logging
 from os import path
-from .base import *
+from .base import * # noqa
 from huey import RedisHuey
-
+import os
 DEBUG = True
 ALLOWED_HOSTS = [
     "*",
@@ -27,7 +26,7 @@ STORAGES = {
     "staticfiles": {
         "BACKEND": "django.contrib.staticfiles.storage.StaticFilesStorage",
         "OPTIONS": {
-            "location": path.join(BASE_DIR, "staticfiles"),
+            "location": path.join(BASE_DIR, "staticfiles"), # noqa
             "base_url": "/static/",
         },
     },
@@ -38,9 +37,9 @@ STORAGES = {
 }
 
 STATIC_URL = "static/"
-STATIC_ROOT = os.path.join(BASE_DIR, "staticfiles")
+STATIC_ROOT = os.path.join(BASE_DIR, "staticfiles") # noqa
 STATICFILES_DIRS = [
-    os.path.join(PROJECT_DIR, "static"),
+    os.path.join(PROJECT_DIR, "static"), # noqa
 ]
 # Database
 # https://docs.djangoproject.com/en/5.0/ref/settings/#databases
