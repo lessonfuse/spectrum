@@ -5,10 +5,7 @@ from .models import (
     SupplementaryService, ICPParticipant, ImportantDates
 )
 
-class StudentForm(forms.ModelForm):
-    class Meta:
-        model = Student
-        fields = ['name', 'id_card_number', 'ie_program', 'date_of_document']
+
 
 class GeneralInformationForm(forms.ModelForm):
     class Meta:
@@ -19,7 +16,7 @@ class LearningProfileForm(forms.ModelForm):
     class Meta:
         model = LearningProfile
         exclude = ['student']
-        
+
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
         for field in self.fields:

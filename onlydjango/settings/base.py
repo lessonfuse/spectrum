@@ -8,7 +8,7 @@ BASE_DIR = PROJECT_DIR.parent
 WSGI_APPLICATION = "onlydjango.wsgi.application"
 
 FIRST_PARTY_APPS = [
-    "icp"
+    "icp",
 ]
 
 ALL_AUTH_APPS = [
@@ -91,18 +91,8 @@ TEMPLATES = [
         "DIRS": [
             os.path.join(PROJECT_DIR, "templates"),
         ],
+        "APP_DIRS": True,
         "OPTIONS": {
-            "loaders": [(
-                "django.template.loaders.cached.Loader",
-                [
-                    "django_cotton.cotton_loader.Loader",
-                    "django.template.loaders.filesystem.Loader",
-                    "django.template.loaders.app_directories.Loader",
-                ],
-            )],
-            "builtins": [
-                "django_cotton.templatetags.cotton"
-            ],
             "context_processors": [
                 "django.template.context_processors.debug",
                 "django.template.context_processors.request",

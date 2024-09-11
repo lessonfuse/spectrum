@@ -1,0 +1,29 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block extrahead %}
+{% endblock %}
+
+{% block css_debug %}
+{% endblock %}
+
+{% block base_content %}
+    <div x-data="{ sidebarOpen: false }" class="h-screen flex overflow-hidden bg-white">
+{% comment %} Sidebar for mobile and desktop removed {% endcomment %}
+    
+        <div class="flex flex-col w-0 flex-1 overflow-hidden">
+            <main class="flex-1 relative overflow-y-auto focus:outline-none">
+                <div class="py-6">
+                    <div class="mx-auto px-4">
+                        <div class="bg-white overflow-hidden sm:rounded-lg">
+                            <div class="">
+                                {% block content %}
+                                {% endblock %}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </main>
+        </div>
+    </div>
+{% endblock %}

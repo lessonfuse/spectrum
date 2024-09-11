@@ -16,11 +16,13 @@ from onlydjango.helpers.formclass import ODFormHelper
 
 
 class ODListView(ListView):
-    template_name = "generic/list.html"
+    # template_name = "generic/list.html"
+    pass
 
 
 class ODDetailView(DetailView):
-    template_name = "generic/detail.html"
+    # template_name = "generic/detail.html"
+    pass
 
 
 class ODCreateView(CreateView):

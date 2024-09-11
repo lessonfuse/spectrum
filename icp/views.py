@@ -53,10 +53,26 @@ class StudentCreateView(ODCreateView):
 class StudentUpdateView(ODUpdateView):
     model = Student
     fields = ['name', 'id_card_number', 'ie_program', 'date_of_document']
-    template_name = 'icp/student_update.html'
+    # template_name = 'icp/student_update.html'
 
     def get_success_url(self):
         return reverse_lazy('student_detail', kwargs={'pk': self.object.id})
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['title'] = 'Update Student'
+        return context
+
+    def get_form_class(self):
+        return modelform_factory(
+            self.model,
+            fields=self.fields,
+            widgets={
+                "date_of_document": DatePickerInput(
+                    options=FlatpickrOptions(minDate="today"),
+                ),
+            },
+        )
 
 class StudentDeleteView(ODDeleteView):
     model = Student
