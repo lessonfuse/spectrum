@@ -1,4 +1,4 @@
-from django.test import TestCase, Client
+from django.test import TestCase
 from django.urls import reverse
 from icp.models import Student
 from django.contrib.auth.models import User
@@ -6,7 +6,6 @@ from django.utils import timezone
 
 class TestStudentCreateView(TestCase):
     def setUp(self):
-        self.client = Client()
         self.user = User.objects.create_user(username='testuser', password='12345')
         self.client.login(username='testuser', password='12345')
         self.url = reverse('create_icp')
@@ -38,8 +37,7 @@ class TestStudentCreateView(TestCase):
         response = self.client.post(self.url, data)
         self.assertEqual(response.status_code, 200)  # Stay on the same page
         self.assertFalse(Student.objects.filter(id_card_number='1234567890').exists())
-        self.assertIn('name', response.context['form'].errors)
-        self.assertEqual(response.context['form'].errors['name'][0], 'This field is required.')
+        self.assertFormError(response, 'form', 'name', 'This field is required.')
 
     def test_redirect_after_creation(self):
         data = {
@@ -68,7 +66,6 @@ class TestStudentCreateView(TestCase):
         form = response.context['form']
         self.assertIn('date_of_document', form.fields)
         self.assertEqual(form.fields['date_of_document'].widget.__class__.__name__, 'DatePickerInput')
-
 
 class TestFakeAddition(TestCase):
     def test_fake_addition(self):
