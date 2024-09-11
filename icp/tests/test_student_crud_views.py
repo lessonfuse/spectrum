@@ -4,6 +4,12 @@ from icp.models import Student
 from django.contrib.auth.models import User
 from django.utils import timezone
 
+
+class TestFakeAddition(TestCase):
+    def test_fake_addition(self):
+        self.assertEqual(1 + 1, 2)
+
+
 class TestStudentCreateView(TestCase):
     def setUp(self):
         self.user = User.objects.create_user(username='testuser', password='12345')
@@ -66,8 +72,3 @@ class TestStudentCreateView(TestCase):
         form = response.context['form']
         self.assertIn('date_of_document', form.fields)
         self.assertEqual(form.fields['date_of_document'].widget.__class__.__name__, 'DatePickerInput')
-
-class TestFakeAddition(TestCase):
-    def test_fake_addition(self):
-        self.assertEqual(1 + 1, 2)
-

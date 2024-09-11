@@ -1,6 +1,5 @@
 import re
 
-from django.contrib.auth.models import User
 from django.core.exceptions import ValidationError
 from django.db import models
 
@@ -198,17 +197,17 @@ class Document(models.Model):
 
 class ICPTeam(models.Model):
     student = models.OneToOneField(Student, on_delete=models.CASCADE, related_name='icp_team')
-    team_members = models.ManyToManyField(User, related_name='icp_teams')
+    team_members = models.ManyToManyField('auth.User', related_name='icp_teams')
     formation_date = models.DateField(help_text="Select the date when the ICP team was formed.")
 
 
 class ReferralSystem(models.Model):
     student = models.ForeignKey(Student, on_delete=models.CASCADE, related_name='referrals')
-    referring_teacher = models.ForeignKey(User, on_delete=models.CASCADE, related_name='referrals_made')
+    referring_teacher = models.ForeignKey('User', on_delete=models.CASCADE, related_name='referrals_made')
     referral_date = models.DateField(help_text="Select the date of the referral.")
     reason_for_referral = models.TextField(help_text="Describe the reason for the referral.")
     status = models.CharField(max_length=50,
                               choices=[('pending', 'Pending'), ('approved', 'Approved'), ('rejected', 'Rejected')])
     approval_date = models.DateField(null=True, blank=True, help_text="Select the date of approval or rejection.")
-    approver = models.ForeignKey(User, on_delete=models.SET_NULL, null=True, blank=True,
+    approver = models.ForeignKey('auth.User', on_delete=models.SET_NULL, null=True, blank=True,
                                  related_name='referrals_approved')
