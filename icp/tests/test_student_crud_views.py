@@ -9,7 +9,7 @@ class TestStudentCreateView(TestCase):
         self.client = Client()
         self.user = User.objects.create_user(username='testuser', password='12345')
         self.client.login(username='testuser', password='12345')
-        self.url = reverse('student_create')
+        self.url = reverse('create_icp')
 
     def test_get_create_view(self):
         response = self.client.get(self.url)
