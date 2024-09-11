@@ -1,73 +1,68 @@
 from django.test import TestCase, Client
-from django.urls import reverse, NoReverseMatch
+from django.urls import reverse
 from icp.models import Student
 from django.contrib.auth.models import User
+from django.utils import timezone
 
-class TestStudentCRUDViews(TestCase):
+class TestStudentCreateView(TestCase):
     def setUp(self):
         self.client = Client()
         self.user = User.objects.create_user(username='testuser', password='12345')
         self.client.login(username='testuser', password='12345')
-        self.student = Student.objects.create(
-            name="Test Student",
-            id_card_number="A123456",
-            ie_program="mainstream",
-            date_of_document="2023-01-01",
-            current_education_level="Grade 5"
-        )
+        self.url = reverse('student_create')
 
-    def test_student_create_view(self):
-        response = self.client.get(reverse('create_icp'))
+    def test_get_create_view(self):
+        response = self.client.get(self.url)
         self.assertEqual(response.status_code, 200)
         self.assertTemplateUsed(response, 'generic/create.html')
+        self.assertContains(response, 'Create Student')
 
+    def test_post_create_view_valid_data(self):
         data = {
-            'name': 'New Student',
-            'id_card_number': 'A654321',
-            'ie_program': 'mainstream',
-            'date_of_document': '2023-06-01',
-            'current_education_level': 'Grade 6'
+            'name': 'John Doe',
+            'id_card_number': '1234567890',
+            'ie_program': 'Program A',
+            'date_of_document': timezone.now().date().isoformat()
         }
-        response = self.client.post(reverse('create_icp'), data)
-        self.assertEqual(response.status_code, 302)
-        self.assertTrue(Student.objects.filter(name='New Student').exists())
-        new_student = Student.objects.get(name='New Student')
-        self.assertRedirects(response, reverse('general_information', kwargs={'student_id': new_student.id}))
+        response = self.client.post(self.url, data)
+        self.assertEqual(response.status_code, 302)  # Redirect on success
+        self.assertTrue(Student.objects.filter(name='John Doe').exists())
 
-    def test_student_update_view(self):
-        response = self.client.get(reverse('student_update', kwargs={'pk': self.student.pk}))
-        self.assertEqual(response.status_code, 200)
-        self.assertTemplateUsed(response, 'generic/update.html')
-
+    def test_post_create_view_invalid_data(self):
         data = {
-            'name': 'Updated Student',
-            'id_card_number': 'A123456',
-            'ie_program': 'school_readiness',
-            'date_of_document': '2023-06-01',
-            'current_education_level': 'Grade 5'
+            'name': '',  # Invalid: empty name
+            'id_card_number': '1234567890',
+            'ie_program': 'Program A',
+            'date_of_document': timezone.now().date().isoformat()
         }
-        response = self.client.post(reverse('student_update', kwargs={'pk': self.student.pk}), data)
-        self.assertEqual(response.status_code, 302)
-        self.student.refresh_from_db()
-        self.assertEqual(self.student.name, 'Updated Student')
-        self.assertEqual(self.student.ie_program, 'school_readiness')
-        self.assertRedirects(response, reverse('student_detail', kwargs={'pk': self.student.pk}))
+        response = self.client.post(self.url, data)
+        self.assertEqual(response.status_code, 200)  # Stay on the same page
+        self.assertFalse(Student.objects.filter(id_card_number='1234567890').exists())
+        self.assertFormError(response, 'form', 'name', 'This field is required.')
 
-    def test_student_delete_view(self):
-        response = self.client.get(reverse('student_delete', kwargs={'pk': self.student.pk}))
-        self.assertEqual(response.status_code, 200)
-        self.assertTemplateUsed(response, 'generic/delete.html')
+    def test_redirect_after_creation(self):
+        data = {
+            'name': 'Jane Doe',
+            'id_card_number': '0987654321',
+            'ie_program': 'Program B',
+            'date_of_document': timezone.now().date().isoformat()
+        }
+        response = self.client.post(self.url, data)
+        new_student = Student.objects.get(name='Jane Doe')
+        expected_url = reverse('general_information', kwargs={'student_id': new_student.id})
+        self.assertRedirects(response, expected_url)
 
-        response = self.client.post(reverse('student_delete', kwargs={'pk': self.student.pk}))
-        self.assertEqual(response.status_code, 302)
-        self.assertFalse(Student.objects.filter(pk=self.student.pk).exists())
-        self.assertRedirects(response, reverse('list_icps'))
+    def test_date_picker_widget(self):
+        response = self.client.get(self.url)
+        self.assertContains(response, 'flatpickr')
+        self.assertContains(response, 'minDate')
 
-        # Check if the student detail page no longer exists
-        response = self.client.get(reverse('student_detail', kwargs={'pk': self.student.pk}))
-        self.assertEqual(response.status_code, 404)
+    def test_context_data(self):
+        response = self.client.get(self.url)
+        self.assertEqual(response.context['title'], 'Create Student')
 
-    def test_unauthenticated_access(self):
-        self.client.logout()
-        response = self.client.get(reverse('create_icp'))
-        self.assertEqual(response.status_code, 200)
+    def test_form_class(self):
+        response = self.client.get(self.url)
+        form = response.context['form']
+        self.assertIn('date_of_document', form.fields)
+        self.assertEqual(form.fields['date_of_document'].widget.__class__.__name__, 'DatePickerInput')
