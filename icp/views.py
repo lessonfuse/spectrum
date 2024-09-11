@@ -1,13 +1,12 @@
 from django.forms import modelform_factory
 from django.http import HttpResponse
-from django.shortcuts import render
+from django.shortcuts import render, get_object_or_404
 from django.urls import reverse_lazy
 from django_flatpickr.schemas import FlatpickrOptions
 from django_flatpickr.widgets import DatePickerInput
 from docx import Document
 
-from onlydjango.helpers.cbv import ODCreateView
-from onlydjango.helpers.cbv import ODListView
+from onlydjango.helpers.cbv import ODCreateView, ODListView, ODUpdateView, ODDeleteView, ODDetailView
 from .models import (
     Student, Goal, InterventionService,
     SupplementaryService, GeneralInformation, LearningProfile,
@@ -23,6 +22,10 @@ class ICPListView(ODListView):
     model = Student
     context_object_name = 'students'
     template_name = 'icp/list.html'
+
+class StudentDetailView(ODDetailView):
+    model = Student
+    template_name = 'icp/student_detail.html'
 
 class StudentCreateView(ODCreateView):
     model = Student
@@ -47,6 +50,18 @@ class StudentCreateView(ODCreateView):
     def get_success_url(self):
         return reverse_lazy('general_information', kwargs={'student_id': self.object.id})
 
+class StudentUpdateView(ODUpdateView):
+    model = Student
+    fields = ['name', 'id_card_number', 'ie_program', 'date_of_document']
+    template_name = 'icp/student_update.html'
+
+    def get_success_url(self):
+        return reverse_lazy('student_detail', kwargs={'pk': self.object.id})
+
+class StudentDeleteView(ODDeleteView):
+    model = Student
+    success_url = reverse_lazy('list_icps')
+
 class GeneralInformationView(ODCreateView):
     model = GeneralInformation
     fields = ['parent_concerns', 'medical_alerts']
@@ -57,7 +72,7 @@ class GeneralInformationView(ODCreateView):
         return context
 
     def form_valid(self, form):
-        form.instance.student = Student.objects.get(id=self.kwargs['student_id'])
+        form.instance.student = get_object_or_404(Student, id=self.kwargs['student_id'])
         return super().form_valid(form)
 
     def get_success_url(self):
@@ -73,7 +88,7 @@ class LearningProfileView(ODCreateView):
         return context
 
     def form_valid(self, form):
-        form.instance.student = Student.objects.get(id=self.kwargs['student_id'])
+        form.instance.student = get_object_or_404(Student, id=self.kwargs['student_id'])
         return super().form_valid(form)
 
     def get_success_url(self):
@@ -92,7 +107,7 @@ class DevelopmentalAreasView(ODCreateView):
         return context
 
     def form_valid(self, form):
-        form.instance.student = Student.objects.get(id=self.kwargs['student_id'])
+        form.instance.student = get_object_or_404(Student, id=self.kwargs['student_id'])
         return super().form_valid(form)
 
     def get_success_url(self):
@@ -112,7 +127,7 @@ class SkillsStrengthsView(ODCreateView):
         return context
 
     def form_valid(self, form):
-        form.instance.student = Student.objects.get(id=self.kwargs['student_id'])
+        form.instance.student = get_object_or_404(Student, id=self.kwargs['student_id'])
         return super().form_valid(form)
 
     def get_success_url(self):
@@ -131,7 +146,7 @@ class AccessibleLearningSupportView(ODCreateView):
         return context
 
     def form_valid(self, form):
-        form.instance.student = Student.objects.get(id=self.kwargs['student_id'])
+        form.instance.student = get_object_or_404(Student, id=self.kwargs['student_id'])
         return super().form_valid(form)
 
     def get_success_url(self):
@@ -150,7 +165,7 @@ class MeasurableGoalsView(ODCreateView):
         return context
 
     def form_valid(self, form):
-        form.instance.student = Student.objects.get(id=self.kwargs['student_id'])
+        form.instance.student = get_object_or_404(Student, id=self.kwargs['student_id'])
         return super().form_valid(form)
 
     def get_success_url(self):
@@ -171,7 +186,7 @@ class InterventionServicesView(ODCreateView):
         return context
 
     def form_valid(self, form):
-        form.instance.student = Student.objects.get(id=self.kwargs['student_id'])
+        form.instance.student = get_object_or_404(Student, id=self.kwargs['student_id'])
         return super().form_valid(form)
 
     def get_success_url(self):
@@ -187,14 +202,14 @@ class SupplementaryServicesView(ODCreateView):
         return context
 
     def form_valid(self, form):
-        form.instance.student = Student.objects.get(id=self.kwargs['student_id'])
+        form.instance.student = get_object_or_404(Student, id=self.kwargs['student_id'])
         return super().form_valid(form)
 
     def get_success_url(self):
         return reverse_lazy('generate_icp', kwargs={'student_id': self.kwargs['student_id']})
 
 def generate_icp(request, student_id):
-    student = Student.objects.get(id=student_id)
+    student = get_object_or_404(Student, id=student_id)
     document = Document()
 
     # Add content to the document based on the student's ICP data

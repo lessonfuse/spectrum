@@ -1,7 +1,8 @@
 from django.urls import path
 from . import views
 from .views import (
-    StudentCreateView, GeneralInformationView, LearningProfileView,
+    StudentCreateView, StudentUpdateView, StudentDeleteView, StudentDetailView,
+    GeneralInformationView, LearningProfileView,
     DevelopmentalAreasView, SkillsStrengthsView,
     AccessibleLearningSupportView, MeasurableGoalsView,
     InterventionServicesView, SupplementaryServicesView, ICPListView
@@ -10,8 +11,11 @@ from .views import (
 urlpatterns = [
     path('', views.home, name='home'),
     path('list/', ICPListView.as_view(), name='list_icps'),
-    path('create/', views.StudentCreateView.as_view(), name='create_icp'),
+    path('create/', StudentCreateView.as_view(), name='create_icp'),
     path('success/', views.icp_success, name='icp_success'),
+    path('<int:pk>/', StudentDetailView.as_view(), name='student_detail'),
+    path('<int:pk>/update/', StudentUpdateView.as_view(), name='student_update'),
+    path('<int:pk>/delete/', StudentDeleteView.as_view(), name='student_delete'),
     path('<int:student_id>/general-information/', GeneralInformationView.as_view(), name='general_information'),
     path('<int:student_id>/learning-profile/', LearningProfileView.as_view(), name='learning_profile'),
     path('<int:student_id>/developmental-areas/', DevelopmentalAreasView.as_view(), name='developmental_areas'),
@@ -22,5 +26,4 @@ urlpatterns = [
     path('<int:student_id>/intervention-services/', InterventionServicesView.as_view(), name='intervention_services'),
     path('<int:student_id>/supplementary-services/', SupplementaryServicesView.as_view(), name='supplementary_services'),
     path('<int:student_id>/generate-icp/', views.generate_icp, name='generate_icp'),
-
 ]
