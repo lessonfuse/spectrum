@@ -68,3 +68,9 @@ class TestStudentCreateView(TestCase):
         form = response.context['form']
         self.assertIn('date_of_document', form.fields)
         self.assertEqual(form.fields['date_of_document'].widget.__class__.__name__, 'DatePickerInput')
+
+
+class TestFakeAddition(TestCase):
+    def test_fake_addition(self):
+        self.assertEqual(1 + 1, 2)
+
