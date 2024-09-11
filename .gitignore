@@ -5,3 +5,4 @@ __pycache__/
 .idea/
 .aider*
 .aider.conf.yml
+.env
