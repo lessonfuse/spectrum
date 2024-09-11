@@ -233,11 +233,15 @@ def generate_icp(request, student_id):
 
     # General Information
     document.add_heading('General Information', level=1)
-    general_info = student.general_information
     document.add_paragraph(f'ID Card Number: {student.id_card_number}')
     document.add_paragraph(f'IE Program: {student.ie_program}')
-    document.add_paragraph(f'Parent Concerns: {general_info.parent_concerns}')
-    document.add_paragraph(f'Medical Alerts: {general_info.medical_alerts}')
+    
+    try:
+        general_info = student.general_information
+        document.add_paragraph(f'Parent Concerns: {general_info.parent_concerns}')
+        document.add_paragraph(f'Medical Alerts: {general_info.medical_alerts}')
+    except Student.general_information.RelatedObjectDoesNotExist:
+        document.add_paragraph('General Information not available')
 
     # Learning Profile
     document.add_heading('Learning Profile', level=1)

@@ -49,7 +49,8 @@ class TestDocumentGeneration(TestCase):
         InterventionService.objects.create(
             student=self.student,
             program="Math tutoring",
-            frequency="Twice a week"
+            frequency="Twice a week",
+            initiation_date="2023-01-01"
         )
         SupplementaryService.objects.create(
             student=self.student,
