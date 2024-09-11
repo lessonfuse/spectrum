@@ -1,0 +1,16 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="container mx-auto px-4 py-8">
+    <h2 class="text-2xl font-bold mb-4">Goal Added Successfully</h2>
+    <p class="mb-4">What would you like to do next?</p>
+    <div class="flex space-x-4">
+        <a href="{% url 'measurable_goals' student_id=student_id %}" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
+            Add Another Goal
+        </a>
+        <a href="{% url 'intervention_services' student_id=student_id %}" class="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded">
+            Go to Next Step
+        </a>
+    </div>
+</div>
+{% endblock %}
