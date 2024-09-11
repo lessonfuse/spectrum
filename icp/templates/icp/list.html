@@ -4,47 +4,48 @@
 {% endblock %}
 
 {% block base_content %}
-    <div class="flex justify-between my-10">
-        <h2 class="text-2xl flex-grow font-bold text-left">
-            {{ title }}
-        </h2>
-        <div class="flex gap-2">
-            <a href="{{ create_url }}" class="px-4 py-2 bg-blue-500 text-white rounded-xl hover:bg-blue-700">Add
-                New {{ title }}
-            </a>
-            <a href="/"
-               class="px-4 py-2 bg-zinc-500 text-white rounded-xl hover:bg-zinc-700">
-                Back
-            </a>
+    <div class="container mx-auto px-4 py-8">
+        <div class="flex justify-between items-center mb-8">
+            <h2 class="text-3xl font-bold">
+                {{ title }}
+            </h2>
+            <div class="flex gap-4">
+                <a href="{{ create_url }}" class="bg-blue-700 hover:bg-blue-800 text-white font-bold py-2 px-4 rounded-md focus:outline-none focus:ring-2 focus:ring-yellow-500">
+                    Add New {{ title }}
+                </a>
+                <a href="/" class="bg-gray-500 hover:bg-gray-600 text-white font-bold py-2 px-4 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500">
+                    Back
+                </a>
+            </div>
         </div>
-    </div>
 
-    <div class="overflow-x-auto">
-        <table class="min-w-full bg-white">
-            <thead class="bg-gray-200">
-                <tr>
-                    <th class="py-2 px-4 border-b text-left">Actions</th>
-                    <th class="py-2 px-4 border-b text-left">Name</th>
-                    <th class="py-2 px-4 border-b text-left">ID Card Number</th>
-                    <th class="py-2 px-4 border-b text-left">IE Program</th>
-                    <th class="py-2 px-4 border-b text-left">Date of Document</th>
-                    <th class="py-2 px-4 border-b text-left">Current Education Level</th>
-                </tr>
-            </thead>
-            <tbody class="divide-y divide-gray-200">
-                {% for student in object_list %}
-                    <tr class="hover:bg-gray-100">
-                        <td class="py-2 px-4">
-                            <a href="{% url 'student_update' student.id %}" class="text-blue-500 hover:text-blue-700 mr-2">View</a>
-                        </td>
-                        <td class="py-2 px-4">{{ student.name }}</td>
-                        <td class="py-2 px-4">{{ student.id_card_number }}</td>
-                        <td class="py-2 px-4">{{ student.get_ie_program_display }}</td>
-                        <td class="py-2 px-4">{{ student.date_of_document }}</td>
-                        <td class="py-2 px-4">{{ student.current_education_level }}</td>
+        <div class="overflow-x-auto bg-white shadow-md rounded-lg">
+            <table class="min-w-full">
+                <thead class="bg-gray-100">
+                    <tr>
+                        <th class="py-3 px-4 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Actions</th>
+                        <th class="py-3 px-4 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Name</th>
+                        <th class="py-3 px-4 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">ID Card Number</th>
+                        <th class="py-3 px-4 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">IE Program</th>
+                        <th class="py-3 px-4 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Date of Document</th>
+                        <th class="py-3 px-4 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Current Education Level</th>
                     </tr>
-                {% endfor %}
-            </tbody>
-        </table>
+                </thead>
+                <tbody class="divide-y divide-gray-200">
+                    {% for student in object_list %}
+                        <tr class="hover:bg-gray-50">
+                            <td class="py-4 px-4 whitespace-nowrap">
+                                <a href="{% url 'student_update' student.id %}" class="text-blue-600 hover:text-blue-900">View</a>
+                            </td>
+                            <td class="py-4 px-4 whitespace-nowrap">{{ student.name }}</td>
+                            <td class="py-4 px-4 whitespace-nowrap">{{ student.id_card_number }}</td>
+                            <td class="py-4 px-4 whitespace-nowrap">{{ student.get_ie_program_display }}</td>
+                            <td class="py-4 px-4 whitespace-nowrap">{{ student.date_of_document }}</td>
+                            <td class="py-4 px-4 whitespace-nowrap">{{ student.current_education_level }}</td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
     </div>
 {% endblock %}
