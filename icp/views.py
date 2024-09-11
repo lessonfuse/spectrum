@@ -55,6 +55,13 @@ class StudentCreateView(ODCreateView):
     def get_success_url(self):
         return reverse_lazy('general_information', kwargs={'student_id': self.object.id})
 
+    def post(self, request, *args, **kwargs):
+        form = self.get_form()
+        if form.is_valid():
+            return self.form_valid(form)
+        else:
+            return self.form_invalid(form)
+
 class StudentUpdateView(ODUpdateView):
     model = Student
     fields = ['name', 'id_card_number', 'ie_program', 'date_of_document']
