@@ -35,9 +35,10 @@
                 {% for student in object_list %}
                     <tr class="hover:bg-gray-100">
                         <td class="py-2 px-4">
-                            <a href="{% url 'student_detail' student.id %}" class="text-blue-500 hover:text-blue-700 mr-2">View</a>
-                            <a href="{% url 'student_update' student.id %}" class="text-blue-500 hover:text-blue-700 mr-2">Edit</a>
-                            <a href="{% url 'student_delete' student.id %}" class="text-red-500 hover:text-red-700">Delete</a>
+                            <a href="{% url 'general_information' student.id %}" class="text-blue-500 hover:text-blue-700 mr-2">View</a>
+                            <a href="{% url 'create_icp' %}?student_id={{ student.id }}" class="text-blue-500 hover:text-blue-700 mr-2">Edit</a>
+                            <!-- Assuming you have a delete view, otherwise remove this line -->
+                            <a href="#" class="text-red-500 hover:text-red-700">Delete</a>
                         </td>
                         <td class="py-2 px-4">{{ student.name }}</td>
                         <td class="py-2 px-4">{{ student.id_card_number }}</td>
