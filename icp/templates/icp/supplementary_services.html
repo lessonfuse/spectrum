@@ -1,0 +1,17 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<h1>Supplementary Services for {{ student.name }}</h1>
+<form method="post">
+    {% csrf_token %}
+    {{ formset.management_form }}
+    {% for form in formset %}
+        {{ form.as_p }}
+    {% endfor %}
+    <h2>ICP Participant</h2>
+    {{ participant_form.as_p }}
+    <h2>Important Dates</h2>
+    {{ dates_form.as_p }}
+    <button type="submit">Generate ICP</button>
+</form>
+{% endblock %}

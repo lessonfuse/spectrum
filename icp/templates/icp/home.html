@@ -1,0 +1,21 @@
+{% extends 'base.html' %}
+
+
+{% block css_debug %}
+{% endblock %}
+
+
+{% block base_content %}
+<div class="container mx-auto px-4 py-8">
+    <h1 class="text-3xl font-bold mb-6">Spectrum</h1>
+    <p class="mb-4">Spectrum is a tool in development to easily generate ICP profiles for students.</p>
+    <div class="flex space-x-4">
+        <a href="{% url 'create_icp' %}" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
+            Create ICP
+        </a>
+        <a href="{% url 'list_icps' %}" class="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded">
+            View All ICPs
+        </a>
+    </div>
+</div>
+{% endblock %}
