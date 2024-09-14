@@ -4,9 +4,9 @@ from django.shortcuts import render, get_object_or_404
 from django.urls import reverse_lazy
 from django_flatpickr.schemas import FlatpickrOptions
 from django_flatpickr.widgets import DatePickerInput
-from docx import Document
 
 from onlydjango.helpers.cbv import ODCreateView, ODListView, ODUpdateView, ODDeleteView, ODDetailView
+from .docgen import ICPDocumentGenerator
 from .models import (
     Student, Goal, InterventionService,
     SupplementaryService, GeneralInformation, LearningProfile,
@@ -229,37 +229,9 @@ class SupplementaryServicesView(ODCreateView):
 
 def generate_icp(request, student_id):
     student = get_object_or_404(Student, id=student_id)
-    document = Document()
+    generator = ICPDocumentGenerator(student)
+    document = generator.generate()
 
-    # Add content to the document based on the student's ICP data
-    document.add_heading(f'Individualized Care Plan for {student.name}', 0)
-
-    # General Information
-    document.add_heading('General Information', level=1)
-    document.add_paragraph(f'ID Card Number: {student.id_card_number}')
-    document.add_paragraph(f'IE Program: {student.ie_program}')
-
-    try:
-        general_info = student.general_information
-        document.add_paragraph(f'Parent Concerns: {general_info.parent_concerns}')
-        document.add_paragraph(f'Medical Alerts: {general_info.medical_alerts}')
-    except Student.general_information.RelatedObjectDoesNotExist:
-        document.add_paragraph('General Information not available')
-
-    # Learning Profile
-    document.add_heading('Learning Profile', level=1)
-    learning_profile = student.learning_profile
-    for field in learning_profile._meta.get_fields():
-        if field.name != 'id' and field.name != 'student':
-            value = getattr(learning_profile, field.name)
-            if isinstance(value, bool):
-                document.add_paragraph(f'{field.verbose_name}: {"Yes" if value else "No"}')
-            else:
-                document.add_paragraph(f'{field.verbose_name}: {value}')
-
-    # Add other sections (Developmental Areas, Skills & Strengths, etc.)
-
-    # Save the document
     response = HttpResponse(content_type='application/vnd.openxmlformats-officedocument.wordprocessingml.document')
     response['Content-Disposition'] = f'attachment; filename={student.name}_ICP.docx'
     document.save(response)
