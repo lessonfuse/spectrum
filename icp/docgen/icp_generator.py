@@ -14,13 +14,16 @@ class ICPDocumentGenerator:
     def generate(self):
         self._add_logo_and_header()
         self._add_student_info_table()
-        self._add_learning_profile()
-        self._add_developmental_areas()
+        self._add_parents_concern()
+        self._add_medical_alerts()
+        self._add_complex_learning_profile()
+        self._add_focus_developmental_areas()
         self._add_skills_strengths()
-        self._add_accessible_learning_support()
+        self._add_present_levels_of_performance()
         self._add_goals()
         self._add_intervention_services()
         self._add_supplementary_services()
+        self._add_meeting_participants()
         return self.document
 
     def _add_logo_and_header(self):
@@ -64,8 +67,16 @@ class ICPDocumentGenerator:
         cells[0].text = 'Date'
         cells[1].text = str(self.student.date_of_document)
 
-    def _add_learning_profile(self):
-        self.document.add_heading('Learning Profile', level=1)
+    def _add_parents_concern(self):
+        self.document.add_heading('Parents Concern', level=1)
+        self.document.add_paragraph(self.student.general_information.parent_concerns)
+
+    def _add_medical_alerts(self):
+        self.document.add_heading('Medical Alerts, Background and History', level=1)
+        self.document.add_paragraph(self.student.general_information.medical_alerts)
+
+    def _add_complex_learning_profile(self):
+        self.document.add_heading('Complex Learning Profile', level=1)
         learning_profile = self.student.learning_profile
         table = self.document.add_table(rows=1, cols=2)
         table.style = 'Table Grid'
@@ -76,20 +87,8 @@ class ICPDocumentGenerator:
                 value = getattr(learning_profile, field.name)
                 row.cells[1].text = dict(learning_profile.CONDITION_STATUS)[value] if isinstance(value, str) else str(value)
 
-    def _add_learning_profile(self):
-        self.document.add_heading('Learning Profile', level=1)
-        learning_profile = self.student.learning_profile
-        table = self.document.add_table(rows=1, cols=2)
-        table.style = 'Table Grid'
-        for field in learning_profile._meta.get_fields():
-            if field.name not in ['id', 'student']:
-                row = table.add_row()
-                row.cells[0].text = field.verbose_name
-                value = getattr(learning_profile, field.name)
-                row.cells[1].text = dict(learning_profile.CONDITION_STATUS)[value] if isinstance(value, str) else str(value)
-
-    def _add_developmental_areas(self):
-        self.document.add_heading('Developmental Areas', level=1)
+    def _add_focus_developmental_areas(self):
+        self.document.add_heading('Focus Developmental and Learning Areas', level=1)
         dev_areas = self.student.developmental_area
         table = self.document.add_table(rows=1, cols=2)
         table.style = 'Table Grid'
@@ -101,21 +100,18 @@ class ICPDocumentGenerator:
                 row.cells[1].text = 'Yes' if value else 'No' if isinstance(value, bool) else str(value)
 
     def _add_skills_strengths(self):
-        self.document.add_heading('Skills & Strengths', level=1)
+        self.document.add_heading('Student Skills & Strengths', level=1)
         skills = self.student.skills_strengths
         for field in skills._meta.get_fields():
             if field.name not in ['id', 'student']:
                 self.document.add_paragraph(f'{field.verbose_name}: {getattr(skills, field.name)}')
 
-    def _add_accessible_learning_support(self):
-        self.document.add_heading('Accessible Learning Support', level=1)
-        support = self.student.accessible_learning_support
-        for field in support._meta.get_fields():
-            if field.name not in ['id', 'student']:
-                self.document.add_paragraph(f'{field.verbose_name}: {getattr(support, field.name)}')
+    def _add_present_levels_of_performance(self):
+        self.document.add_heading('Present Levels of Educational Performance', level=1)
+        # Add code to include present levels of performance data
 
     def _add_goals(self):
-        self.document.add_heading('Measurable Goals', level=1)
+        self.document.add_heading('Goals', level=1)
         goals = self.student.goals.all()
         for goal in goals:
             table = self.document.add_table(rows=1, cols=2)
@@ -160,3 +156,20 @@ class ICPDocumentGenerator:
             row.cells[0].text = service.type_of_support
             row.cells[1].text = service.time
             row.cells[2].text = service.duration
+
+    def _add_meeting_participants(self):
+        self.document.add_heading('ICP Meeting Participants', level=1)
+        participants = self.student.icp_participants.all()
+        table = self.document.add_table(rows=1, cols=4)
+        table.style = 'Table Grid'
+        headers = table.rows[0].cells
+        headers[0].text = 'Name'
+        headers[1].text = 'Designation'
+        headers[2].text = 'Signature'
+        headers[3].text = 'Date'
+        for participant in participants:
+            row = table.add_row()
+            row.cells[0].text = participant.name
+            row.cells[1].text = participant.designation
+            row.cells[2].text = participant.signature
+            row.cells[3].text = str(participant.date)
