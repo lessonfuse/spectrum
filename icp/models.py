@@ -203,7 +203,7 @@ class ICPTeam(models.Model):
 
 class ReferralSystem(models.Model):
     student = models.ForeignKey(Student, on_delete=models.CASCADE, related_name='referrals')
-    referring_teacher = models.ForeignKey('User', on_delete=models.CASCADE, related_name='referrals_made')
+    referring_teacher = models.ForeignKey('auth.User', on_delete=models.CASCADE, related_name='referrals_made')
     referral_date = models.DateField(help_text="Select the date of the referral.")
     reason_for_referral = models.TextField(help_text="Describe the reason for the referral.")
     status = models.CharField(max_length=50,
