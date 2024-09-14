@@ -9,6 +9,7 @@ def validate_id_card_number(value):
 
 
 class Student(models.Model):
+    school_logo = models.ImageField(upload_to='students/', blank=True)
     name = models.CharField(max_length=255,
                             help_text="Enter the student's full name as it appears on official documents.")
     id_card_number = models.CharField(max_length=7,
