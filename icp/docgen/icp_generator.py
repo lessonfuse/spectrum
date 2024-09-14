@@ -2,6 +2,9 @@ from docx import Document
 from docx.shared import Inches, Pt
 from docx.enum.text import WD_ALIGN_PARAGRAPH
 from docx.enum.table import WD_ALIGN_VERTICAL
+from docx.shared import Cm
+from io import BytesIO
+from PIL import Image
 
 class ICPDocumentGenerator:
     def __init__(self, student):
@@ -9,8 +12,8 @@ class ICPDocumentGenerator:
         self.document = Document()
 
     def generate(self):
-        self._add_header()
-        self._add_general_information()
+        self._add_logo_and_header()
+        self._add_student_info_table()
         self._add_learning_profile()
         self._add_developmental_areas()
         self._add_skills_strengths()
@@ -20,33 +23,58 @@ class ICPDocumentGenerator:
         self._add_supplementary_services()
         return self.document
 
-    def _add_header(self):
-        header = self.document.add_heading(f'Individualized Care Plan for {self.student.name}', 0)
+    def _add_logo_and_header(self):
+        if self.student.school_logo:
+            logo = Image.open(BytesIO(self.student.school_logo.read()))
+            logo_width = Cm(2.5)  # Adjust as needed
+            logo_height = int(logo_width * (logo.height / logo.width))
+            logo_paragraph = self.document.add_paragraph()
+            logo_paragraph.alignment = WD_ALIGN_PARAGRAPH.CENTER
+            logo_run = logo_paragraph.add_run()
+            logo_run.add_picture(self.student.school_logo, width=logo_width, height=Cm(logo_height))
+
+        header = self.document.add_heading('INDIVIDUALIZED CURRICULUM PLAN', 0)
         header.alignment = WD_ALIGN_PARAGRAPH.CENTER
 
-    def _add_general_information(self):
-        self.document.add_heading('General Information', level=1)
+    def _add_student_info_table(self):
         table = self.document.add_table(rows=3, cols=2)
         table.style = 'Table Grid'
         
         cells = table.rows[0].cells
+        cells[0].text = 'Name'
+        cells[1].text = self.student.name
+
+        cells = table.rows[0].cells
         cells[0].text = 'ID Card Number'
         cells[1].text = self.student.id_card_number
+
+        cells = table.rows[1].cells
+        cells[0].text = 'Age'
+        cells[1].text = str(self.student.age)
 
         cells = table.rows[1].cells
         cells[0].text = 'IE Program'
         cells[1].text = self.student.ie_program
 
         cells = table.rows[2].cells
-        cells[0].text = 'Date of Document'
+        cells[0].text = 'Index'
+        cells[1].text = self.student.index
+
+        cells = table.rows[2].cells
+        cells[0].text = 'Date'
         cells[1].text = str(self.student.date_of_document)
 
-        try:
-            general_info = self.student.general_information
-            self.document.add_paragraph(f'Parent Concerns: {general_info.parent_concerns}')
-            self.document.add_paragraph(f'Medical Alerts: {general_info.medical_alerts}')
-        except self.student.general_information.RelatedObjectDoesNotExist:
-            self.document.add_paragraph('General Information not available')
+    def _add_learning_profile(self):
+        self.document.add_heading('Learning Profile', level=1)
+        learning_profile = self.student.learning_profile
+        table = self.document.add_table(rows=1, cols=2)
+        table.style = 'Table Grid'
+        for field in learning_profile._meta.get_fields():
+            if field.name not in ['id', 'student']:
+                row = table.add_row()
+                row.cells[0].text = field.verbose_name
+                value = getattr(learning_profile, field.name)
+                row.cells[1].text = dict(learning_profile.CONDITION_STATUS)[value] if isinstance(value, str) else str(value)
 
     def _add_learning_profile(self):
         self.document.add_heading('Learning Profile', level=1)

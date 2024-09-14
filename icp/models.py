@@ -15,12 +15,14 @@ class Student(models.Model):
     id_card_number = models.CharField(max_length=7,
                                       help_text="Enter the student's ID card number for official identification.",
                                       validators=[validate_id_card_number])
+    age = models.PositiveIntegerField(help_text="Enter the student's age.")
     ie_program = models.CharField(max_length=255,
                                   help_text="Specify the Inclusive Education (IE) program the student is enrolled in.",
                                   choices=[('mainstream', 'Mainstream Program'),
                                            ('school_readiness', 'School Readiness'),
                                            ('early_intervention', 'Early Intervention'),
                                            ('homeschooling', 'Homeschooling')])
+    index = models.CharField(max_length=50, help_text="Enter the student's index number.")
     date_of_document = models.DateField(
         help_text="Select the date when this ICP document is being created or last updated.")
     current_education_level = models.CharField(max_length=100,
