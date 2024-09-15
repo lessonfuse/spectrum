@@ -40,7 +40,7 @@ class StudentDetailView(ODDetailView):
 
 class StudentCreateView(ODCreateView):
     model = Student
-    fields = ['name', 'id_card_number', 'ie_program', 'date_of_document']
+    fields = ['school_logo', 'name', 'id_card_number', 'age', 'ie_program', 'index', 'date_of_document', 'current_education_level', 'academic_strengths', 'areas_of_interest']
     template_name = 'generic/create.html'
 
     def get_context_data(self, **kwargs):
@@ -67,7 +67,7 @@ class StudentCreateView(ODCreateView):
 
 class StudentUpdateView(ODUpdateView):
     model = Student
-    fields = ['name', 'id_card_number', 'ie_program', 'date_of_document']
+    fields = ['school_logo', 'name', 'id_card_number', 'age', 'ie_program', 'index', 'date_of_document', 'current_education_level', 'academic_strengths', 'areas_of_interest']
     # template_name = 'icp/student_update.html'
 
     def get_success_url(self):
@@ -111,7 +111,7 @@ class GeneralInformationView(ODCreateView):
 
 class LearningProfileView(ODCreateView):
     model = LearningProfile
-    # form_class = LearningProfileForm
+    fields = ['learning_disabilities', 'gifts_and_talents', 'multiple_disabilities', 'physical_impairments', 'hearing_impairments', 'visual_impairments', 'intellectual_impairment', 'autism_spectrum_disorder', 'down_syndrome', 'global_development_delay', 'others']
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
