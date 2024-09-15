@@ -1,3 +1,4 @@
+from django.core.paginator import Paginator
 from django.forms import modelform_factory
 from django.http import HttpResponse
 from django.shortcuts import render, get_object_or_404
@@ -15,7 +16,18 @@ from .models import (
 
 
 def home(request):
-    return render(request, 'icp/home.html')
+
+    icp_obj = Student.objects.all()
+
+    paginator = Paginator(icp_obj, 5)
+    page_number = request.GET.get('page')
+    page_obj = paginator.get_page(page_number)
+
+    context = {
+        'icps': page_obj,
+    }
+
+    return render(request, 'icp/home.html', context)
 
 class ICPListView(ODListView):
     model = Student
