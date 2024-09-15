@@ -7,7 +7,8 @@ from django_flatpickr.schemas import FlatpickrOptions
 from django_flatpickr.widgets import DatePickerInput
 
 from onlydjango.helpers.cbv import ODCreateView, ODListView, ODUpdateView, ODDeleteView, ODDetailView
-from .docgen import ICPDocumentGenerator
+from .docgen.icp_generator import ICPDocumentGenerator
+
 from .models import (
     Student, Goal, InterventionService,
     SupplementaryService, GeneralInformation, LearningProfile,
