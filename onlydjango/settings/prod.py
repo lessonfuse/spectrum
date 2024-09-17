@@ -10,9 +10,9 @@ ALLOWED_HOSTS = [
 SECRET_KEY = os.getenv("DJANGO_SECRET_KEY")  # secret
 
 CSRF_TRUSTED_ORIGINS = [
-    "spectrum.lessonfuse.com",
-    "lessonfuse.com",
-    "*.railway.app",
+    "https://spectrum.lessonfuse.com",
+    "https://lessonfuse.com",
+    "https://railway.app",
 ]
 CSRF_COOKIE_DOMAIN = "*.railway.app"
 SESSION_COOKIE_DOMAIN = "*.railway.app"
