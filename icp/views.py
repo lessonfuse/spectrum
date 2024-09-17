@@ -243,11 +243,10 @@ class SupplementaryServicesView(ODCreateView):
 def generate_icp(request, student_id):
     student = get_object_or_404(Student, id=student_id)
     generator = ICPDocumentGenerator(student)
-    document = generator.generate()
+    pdf_content = generator.generate()
 
-    response = HttpResponse(content_type='application/vnd.openxmlformats-officedocument.wordprocessingml.document')
-    response['Content-Disposition'] = f'attachment; filename={student.name}_ICP.docx'
-    document.save(response)
+    response = HttpResponse(pdf_content, content_type='application/pdf')
+    response['Content-Disposition'] = f'attachment; filename={student.name}_ICP.pdf'
 
     return response
 
