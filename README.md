@@ -2,6 +2,8 @@
 
 Spectrum is a comprehensive Individualized Curriculum Plan (ICP) management system designed to streamline the process of creating, managing, and tracking ICPs for students with diverse learning needs.
 
+[![Deploy on Railway](https://railway.app/button.svg)](https://railway.app/template/bNfoqV?referralCode=NC4Tt6)
+
 ## Project Status
 
 🚧 **Work in Progress** 🚧
@@ -20,31 +22,28 @@ This project is currently under active development. Features and documentation a
 
 ## Getting Started
 
+If you are trying to run this application, please use the deployment button above to deploy the application to Railway. If you are trying to run this application locally, you can follow the instructions below.
+
 ### Prerequisites
 
 - Docker
 - Docker Compose
+- UV
 
 ### Running the Development Environment
 
-To start the development environment, run:
+First run redis and postgres containers that are required for the application to run.
 
 ```bash
 sudo docker compose -f dev.docker-compose.yml up -d
 ```
 
+Then install the dependencies and run the application.
+
+```bash
+uv sync
+```
+
 ## Contributing
 
-As this project is still in development, we're not yet accepting external contributions. Stay tuned for updates!
-
-## License
-
-[License information to be added]
-
-## Contact
-
-[Contact information to be added]
-
----
-
-This README is a living document and will be updated as the project evolves.
+As this project is still in development, we're not yet accepting external contributions. We will however be open to contributions in the future.
