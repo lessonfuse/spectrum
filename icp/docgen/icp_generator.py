@@ -92,7 +92,12 @@ class ICPDocumentGenerator:
         for field in learning_profile._meta.get_fields():
             if field.name not in ['id', 'student']:
                 value = getattr(learning_profile, field.name)
-                data.append([field.verbose_name, dict(learning_profile.CONDITION_STATUS)[value] if isinstance(value, str) else str(value)])
+                if isinstance(value, str):
+                    status_dict = dict(learning_profile.CONDITION_STATUS)
+                    display_value = status_dict.get(value, value)  # Use the original value if not found in the dictionary
+                else:
+                    display_value = str(value)
+                data.append([field.verbose_name, display_value])
         table = Table(data)
         table.setStyle(TableStyle([
             ('BACKGROUND', (0, 0), (-1, 0), colors.grey),
