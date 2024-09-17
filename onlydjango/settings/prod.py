@@ -5,17 +5,17 @@ from huey import RedisHuey
 
 DEBUG = False
 ALLOWED_HOSTS = [
-    "onlydjango.com",
+    "spectrum.lessonfuse.com",
 ]
-SECRET_KEY = os.environ["DJANGO_SECRET_KEY"]  # secret
+SECRET_KEY = os.getenv("DJANGO_SECRET_KEY")  # secret
 
 CSRF_TRUSTED_ORIGINS = [
-    "https://onlydjango.com",
-    "https://beta.onlydjango.com",
-    "https://staging.onlydjango.com",
+    "spectrum.lessonfuse.com",
+    "lessonfuse.com",
+    "*.railway.app",
 ]
-CSRF_COOKIE_DOMAIN = ".onlydjango.com"
-SESSION_COOKIE_DOMAIN = ".onlydjango.com"
+CSRF_COOKIE_DOMAIN = "*.railway.app"
+SESSION_COOKIE_DOMAIN = "*.railway.app"
 CSRF_COOKIE_SECURE = True
 
 
@@ -56,11 +56,11 @@ ACCOUNT_DEFAULT_HTTP_PROTOCOL = 'https'
 DATABASES = {
     "default": {
         "ENGINE": "django.db.backends.postgresql",
-        "NAME": os.environ["PGDATABASE"],
-        "USER": os.environ["PGUSER"],
-        "PASSWORD": os.environ["PGPASSWORD"],
-        "HOST": os.environ["PGHOST"],
-        "PORT": os.environ["PGPORT"],
+        "NAME": os.getenv("PGDATABASE"),
+        "USER": os.getenv("PGUSER"),
+        "PASSWORD": os.getenv("PGPASSWORD"),
+        "HOST": os.getenv("PGHOST"),
+        "PORT": os.getenv("PGPORT"),
         "OPTIONS": {
             "pool": {
                 "min_size": 2,
@@ -74,7 +74,7 @@ DATABASES = {
 # Cache settings
 # https://docs.djangoproject.com/en/5.0/topics/cache/#setting-up-the-cache
 
-REDIS_URL = os.environ["REDIS_PRIVATE_URL"]
+REDIS_URL = os.getenv("REDIS_PRIVATE_URL")
 CACHES = {
     "default": {
         "BACKEND": "django.core.cache.backends.redis.RedisCache",
@@ -88,7 +88,7 @@ CACHES = {
 HUEY = RedisHuey("huey", url=REDIS_URL)
 
 # Email to receive error logs
-ADMINS = [("Admin", os.environ["ADMIN_EMAIL"])]
+ADMINS = [("Admin", os.getenv("ADMIN_EMAIL"))]
 
 # Email settings
 # https://docs.djangoproject.com/en/3.1/topics/email/
@@ -96,8 +96,8 @@ EMAIL_BACKEND = "django.core.mail.backends.smtp.EmailBackend"
 EMAIL_HOST = "smtp.gmail.com"
 EMAIL_PORT = 587
 EMAIL_USE_TLS = True
-EMAIL_HOST_USER = os.environ["EMAIL_HOST_USER"]  # secrets
-EMAIL_HOST_PASSWORD = os.environ["EMAIL_HOST_PASSWORD"]  # secrets
+EMAIL_HOST_USER = os.getenv("EMAIL_HOST_USER")  # secrets
+EMAIL_HOST_PASSWORD = os.getenv("EMAIL_HOST_PASSWORD")  # secrets
 
 # setup logging - log to file and email
 # https://docs.djangoproject.com/en/5.0/topics/logging/
@@ -112,16 +112,16 @@ LOGGING = {
         "telegram": {
             "level": "INFO",
             "class": "onlydjango.telegram_logging.TelegramBotHandler",
-            "telegram_bot_token": os.environ["TELEGRAM_BOT_TOKEN"],
-            "telegram_chat_id": os.environ["TELEGRAM_CHAT_ID"],
+            "telegram_bot_token": os.getenv("TELEGRAM_BOT_TOKEN"),
+            "telegram_chat_id": os.getenv("TELEGRAM_CHAT_ID"),
             "formatter": "telegram",
             "filters": ["exclude_disallowed_host"],
         },
         "error_handler": {
             "level": "ERROR",
             "class": "onlydjango.telegram_logging.TelegramBotHandler",
-            "telegram_bot_token": os.environ["TELEGRAM_BOT_TOKEN"],
-            "telegram_chat_id": os.environ["TELEGRAM_CHAT_ID"],
+            "telegram_bot_token": os.getenv("TELEGRAM_BOT_TOKEN"),
+            "telegram_chat_id": os.getenv("TELEGRAM_CHAT_ID"),
             "formatter": "telegram",
             "filters": ["exclude_disallowed_host"],
         },
