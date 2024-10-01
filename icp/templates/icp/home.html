@@ -20,7 +20,7 @@
                 </button>
             </div>
 
-            <div class="bg-white border border-zinc-200 rounded-lg p-6 max-w-2xl">
+            <div class="bg-white border border-zinc-200 p-6 max-w-2xl">
                 <h2 class="text-2xl font-bold text-gray-900 mb-6">Recent ICPs</h2>
                 <ul class="space-y-4">
                     {% for icp in icps %}
@@ -37,7 +37,7 @@
 
         <!-- Modal -->
         <div x-show="showModal" class="fixed inset-0 bg-gray-500 bg-opacity-75 flex items-center justify-center" x-cloak>
-            <div @click.away="showModal = false" class="bg-white rounded-lg p-8 max-w-md w-full">
+            <div @click.away="showModal = false" class="bg-white p-8 max-w-md w-full">
                 <h3 class="text-2xl font-bold mb-4">All ICPs</h3>
                 <p class="mb-4">This feature is coming soon!</p>
                 <button @click="showModal = false" class="bg-indigo-600 text-white px-4 py-2 rounded-md hover:bg-indigo-700">Close</button>
