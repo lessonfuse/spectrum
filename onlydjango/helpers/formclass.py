@@ -47,17 +47,16 @@ from crispy_forms.helper import FormHelper
 from crispy_forms.layout import Submit
 
 FORM_STYLES = {
-    "input": "mt-1 block w-full rounded-md py-2 focus:outline-none focus:ring-sky-500 focus:border-sky-500 sm:text-sm",
-    "textarea": "shadow-sm focus:ring-sky-500 focus:border-sky-500 mt-1 block w-full sm:text-sm border border-gray-300 rounded-md",
-    "file": "absolute w-full h-full opacity-0 cursor-pointer border-gray-300 rounded-md hidden",
-    "checkbox": "mt-1 block border border-gray-300 rounded-md shadow-sm p-3 focus:outline-none focus:ring-sky-500 focus:border-sky-500 sm:text-sm",
+    "input": "mt-1 block w-full border border-black py-2 focus:outline-none focus:border-black sm:text-sm",
+    "textarea": "mt-1 block w-full sm:text-sm border border-black focus:outline-none focus:border-black",
+    "file": "absolute w-full h-full opacity-0 cursor-pointer border-black hidden",
+    "checkbox": "mt-1 block border border-black p-3 focus:outline-none focus:border-black sm:text-sm",
 }
 
 
 SUBMIT_BUTTON_STYLE = (
-    "inline-flex justify-center py-2 px-4 border border-transparent shadow-sm text-sm "
-    "font-medium rounded-md text-white bg-sky-600 hover:bg-sky-700 focus:outline-none "
-    "focus:ring-2 focus:ring-offset-2 focus:ring-sky-500"
+    "inline-flex justify-center py-2 px-4 border border-black text-sm "
+    "font-bold text-black bg-white hover:bg-gray-100 focus:outline-none"
 )
 
 
