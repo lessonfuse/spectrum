@@ -18,7 +18,7 @@ from .models import (
 
 def home(request):
 
-    icp_obj = Student.objects.all()
+    icp_obj = Student.objects.all().order_by('-id')
 
     paginator = Paginator(icp_obj, 5)
     page_number = request.GET.get('page')
