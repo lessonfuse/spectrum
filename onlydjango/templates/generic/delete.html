@@ -5,7 +5,7 @@
 
 {% block base_content %}
     <h2>Delete {{ object.name }}</h2>
-    <p>Are you sure you want to delete the asset "{{ object.name }}"?</p>
+    <p>Are you sure you want to delete the "{{ object.name }}"?</p>
     <form method="post">
         {% csrf_token %}
         <button type="submit">Yes, delete</button>
