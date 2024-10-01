@@ -255,13 +255,13 @@
     {% endif %}
 
     <div class="mt-8 flex space-x-4">
-        <a href="{% url 'student_update' object.id %}" class="bg-indigo-500 hover:bg-indigo-600 text-white font-bold py-2 px-4 rounded transition duration-300 ease-in-out">
+        <a href="{% url 'student_update' object.id %}" class="bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline">
             <i class="fas fa-edit mr-2"></i>Edit Student
         </a>
-        <a href="{% url 'student_delete' object.id %}" class="bg-red-500 hover:bg-red-600 text-white font-bold py-2 px-4 rounded transition duration-300 ease-in-out">
+        <a href="{% url 'student_delete' object.id %}" class="bg-red-500 hover:bg-red-600 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline">
             <i class="fas fa-trash-alt mr-2"></i>Delete Student
         </a>
-        <a href="{% url 'list_icps' %}" class="bg-gray-500 hover:bg-gray-600 text-white font-bold py-2 px-4 rounded transition duration-300 ease-in-out">
+        <a href="{% url 'list_icps' %}" class="bg-gray-500 hover:bg-gray-600 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline">
             <i class="fas fa-arrow-left mr-2"></i>Back to List
         </a>
     </div>
