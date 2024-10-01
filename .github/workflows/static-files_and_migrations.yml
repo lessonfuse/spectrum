@@ -1,0 +1,41 @@
+name: Collect static files
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+  workflow_dispatch:
+
+
+jobs:
+  build-and-run:
+    runs-on: ubuntu-latest
+
+    steps:
+      # Checkout the repository
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      # Build the Docker image
+      - name: Build Docker image
+        run: docker build -t onlydjango .
+
+      # Run the Docker container with custom environment variables
+      - name: Run Docker container
+        run: docker run --rm -e DJANGO_SETTINGS_MODULE=$DJANGO_SETTINGS_MODULE -e DJANGO_SECRET_KEY=$DJANGO_SECRET_KEY -e AWS_STORAGE_BUCKET_NAME=$AWS_STORAGE_BUCKET_NAME -e AWS_ACCESS_KEY_ID=$AWS_ACCESS_KEY_ID -e AWS_S3_CUSTOM_DOMAIN=$AWS_S3_CUSTOM_DOMAIN -e AWS_S3_ENDPOINT_URL=$AWS_S3_ENDPOINT_URL -e AWS_SECRET_ACCESS_KEY=$AWS_SECRET_ACCESS_KEY -e PGDATABASE=$PGDATABASE -e PGHOST=$PGHOST -e PGPASSWORD=$PGPASSWORD -e PGPORT=$PGPORT -e PGUSER=$PGUSER onlydjango /bin/sh -c "/bin/uv run python manage.py collectstatic --noinput && /bin/uv run python manage.py migrate"
+        env:
+          DJANGO_SETTINGS_MODULE: "onlydjango.settings.prod"
+          DJANGO_SECRET_KEY: "onlydjango"
+          AWS_STORAGE_BUCKET_NAME: ${{ secrets.AWS_STORAGE_BUCKET_NAME }}
+          AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          AWS_S3_CUSTOM_DOMAIN: ${{ secrets.AWS_S3_CUSTOM_DOMAIN }}
+          AWS_S3_ENDPOINT_URL: ${{ secrets.AWS_S3_ENDPOINT_URL }}
+          AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          PGDATABASE: ${{ secrets.PGDATABASE }}
+          PGHOST: ${{ secrets.PGHOST }}
+          PGPASSWORD: ${{ secrets.PGPASSWORD }}
+          PGPORT: ${{ secrets.PGPORT }}
+          PGUSER: ${{ secrets.PGUSER }}

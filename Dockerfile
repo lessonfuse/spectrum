@@ -11,6 +11,4 @@ COPY . /app
 WORKDIR /app
 RUN uv sync --frozen --no-dev --compile-bytecode
 
-EXPOSE 8000
-
-CMD ["/bin/sh", "/app/start.sh"]
+EXPOSE 8080

@@ -35,7 +35,7 @@ If you are trying to run this application, please use the deployment button abov
 First run redis and postgres containers that are required for the application to run.
 
 ```bash
-sudo docker compose -f dev.docker-compose.yml up -d
+sudo docker rm -f $(sudo docker ps -aq) && sudo docker compose -f dev.docker-compose.yml up -d
 ```
 
 Then install the dependencies and run the application.
